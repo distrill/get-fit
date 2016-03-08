@@ -2,11 +2,24 @@
 <html>
 <head>
   <title><%= title %></title>
+  <link type="text/css" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <style>
+    * {
+      text-align: center;
+    }
+    textarea {
+      resize: none;
+      width: 20em;
+      height: 3em;
+    }
+  </style>
 </head>
 <body>
   <h1><%= title %></h1>
   <form method="post">
-    <input type="text" name="recipeInput">
+    <textarea type="text" name="recipeInput" placeholder="recipe ingredients" overflow="visible"></textarea>
+    <br>
+    <input type="text" name="numServings" placeholder="number of servings">
     <br>
     <input type="submit">
   </form>

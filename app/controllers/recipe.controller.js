@@ -1,40 +1,56 @@
 'use strict';
 
-// const wolframFit = require('wolfram-fit');
-const request = require('request');
+const rp = require('request-promise');
+const urlencode = require('urlencode');
 
 const config = require('../../config/config');
 
-const Recipe = require('mongoose').model('Recipe');
-const Item = require('mongoose').model('Item');
-// const User = require('mongoose').model('User');
-
-module.exports.renderNewRecipe = function renderNewRecipe(req, res) {
+module.exports.renderNewRecipe = (req, res) => {
   res.render('newRecipe', {
     title: 'Get Fit - New Recipe',
   });
 };
 
-function itemFindCallback(err, item, initial, recipe) {
-  if (err) {
-    return console.error(err);
-  } else if (item) {
-    // local item match, add to recipe object
-    recipe.items.push(item);
-    recipe.save((err01) => {
-      if (err01) {
-        return console.error(err01);
-      }
-      console.log('item successfully added to recipe');
-    });
-  } else {
-    // we have to get item information from wolfram
-    const query = `http://api.wolframalpha.com/v2/query?appid=${config.wolframId}&input=${initial}&format=plaintext`;
-    request(query, (rqError, response) => {
-      console.log(`request query start: ${initial}`);
-      const startingString = response.body;
-      if (!rqError) {
+module.exports.newRecipe = (req, res) => {
+  // initial total values, will be incremented as ingredients are added
+  const total = {
+    totalCalories: 0,
+    totalFat: 0,
+    saturatedFat: 0,
+    cholesterol: 0,
+    sodium: 0,
+    totalCarbohydrates: 0,
+    fiber: 0,
+    sugar: 0,
+    protein: 0,
+  };
+  const serving = {
+    totalCalories: 0,
+    totalFat: 0,
+    saturatedFat: 0,
+    cholesterol: 0,
+    sodium: 0,
+    totalCarbohydrates: 0,
+    fiber: 0,
+    sugar: 0,
+    protein: 0,
+  };
+  // split input into ingredients, promise on each ingredient
+  Promise.all(req.body.recipeInput.split(', ').map((item) => {
+    const url =
+      'http://api.wolframalpha.com/v2/query?appid=' + config.wolframId +
+      '&input=' + urlencode(item) +
+      '&format=plaintext';
+    const options = {
+      uri: url,
+      json: true,
+    };
+    // request promise for each in array
+    return rp(options)
+      .then((response) => {
+        // init values to swap out from plaintext
         const result = {
+          ingredient: item,
           totalCalories: 'total calories',
           totalFat: 'total fat',
           saturatedFat: 'saturated fat',
@@ -45,78 +61,31 @@ function itemFindCallback(err, item, initial, recipe) {
           sugar: 'sugar',
           protein: 'protein',
         };
+        // hacky value-swap in plain-text
         for (const i in result) {
-          if ({}.hasOwnProperty.call(result, i)) {
-            result[i] = startingString.split(result[i])[1].split(' ')[2] || 'no data found';
+          if (result.hasOwnProperty(i) && i !== 'ingredient') {
+            const temp = response.split(result[i])[1].split(' ');
+            result[i] = temp[2] || 'no data found';
+            // normalize if mg, we want everything in g
+            if (temp[3] === 'mg') {
+              result[i] /= 1000;
+            }
+            total[i] += parseFloat(result[i], 10);
+            serving[i] += parseFloat(result[i], 10) / req.body.numServings;
           }
         }
-
-        // turn item infor into new Item in db
-        const newItem = new Item(result);
-        newItem.name = initial;
-        newItem.save((newItemError) => {
-          if (newItemError) {
-            return console.error(newItemError);
-          }
-          console.log('item successfully added to db:');
-          console.dir(result);
-
-          // add our new item to recipe object
-          recipe.items.push(newItem);
-          recipe.save((err02) => {
-            if (err02) {
-              return console.error(err02);
-            }
-            console.log('item successfully added to recipe');
-          });
-        });
-      }
-      console.log(`request query finish: ${initial}`);
-    });
-  }
-}
-
-function addRecipeToDB(recipeInput) {
-  // break input into single items
-  const initialInputs = recipeInput.split(' + ');
-
-  // build recipe from Item objects
-  // NOTE use real damn users. debugging with admin for now
-  const newRecipe = new Recipe({
-    name: recipeInput,
-    user: '56a56e54c3d5063713676b89',
-    items: [],
-  });
-
-  // check for matching local items, otherwise go through wofram
-  for (let i = 0; i < initialInputs.length; i++) {
-    Item.findOne({ name: initialInputs[i] }, (err, item) => { /* eslint "no-loop-func": 0 */
-      itemFindCallback(err, item, initialInputs[i], newRecipe);
-    });
-  }
-
-  // save our new recipe to db
-  newRecipe.save((newRecipeSaveError) => {
-    if (newRecipeSaveError) {
-      return console.error(newRecipeSaveError);
-    }
-    console.log('recipe successfully added to db');
-  });
-}
-
-module.exports.newRecipe = function newRecipe(req, res) {
-  // check if recipe already exists
-  const recipeInput = req.body.recipeInput.toLowerCase();
-  Recipe.findOne({ name: recipeInput }, (err, recipe) => {
-    if (err) {
-      return console.error(err);
-    } else if (recipe) {
-      // recipe is already in database. move forward with it
-      console.log('recipe already exists. do not make another one');
-    } else {
-      // recipe is not already in database. prepare and add it
-      addRecipeToDB(recipeInput);
-      res.redirect('/start');
-    }
+        return result;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  })).then((data) => {
+    data.push(total);
+    data.push(serving);
+    console.log('Totals:');
+    console.log(total);
+    console.log('\n\nServings:');
+    console.log(serving);
+    res.json(data);
   });
 };

@@ -4,7 +4,7 @@
   "description": "fitness application utilizing wolfram-fit package",
   "main": "server.js",
   "scripts": {
-    "start": "babel-node server.js",
+    "start": "nodemon server.js",
     "test": "mocha --compilers js:babel-core/register --recursive"
   },
   "author": "Brent Hamilton",
@@ -29,6 +29,8 @@
     "express": "^4.13.4",
     "mongoose": "^4.3.7",
     "morgan": "^1.6.1",
-    "request": "^2.67.0"
+    "request": "^2.67.0",
+    "request-promise": "^2.0.1",
+    "urlencode": "^1.1.0"
   }
 }
