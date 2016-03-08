@@ -70,8 +70,8 @@ module.exports.newRecipe = (req, res) => {
             if (temp[3] === 'mg') {
               result[i] /= 1000;
             }
-            total[i] += parseFloat(result[i], 10);
-            serving[i] += parseFloat(result[i], 10) / req.body.numServings;
+            total[i] += Math.round(parseFloat(result[i]) * 100) / 100;
+            serving[i] += Math.round((parseFloat(result[i]) / req.body.numServings) * 100) / 100;
           }
         }
         return result;
@@ -84,7 +84,7 @@ module.exports.newRecipe = (req, res) => {
     data.push(serving);
     console.log('Totals:');
     console.log(total);
-    console.log('\n\nServings:');
+    console.log('\n\nServings (' + req.body.numServings + '):');
     console.log(serving);
     res.json(data);
   });
