@@ -65,10 +65,14 @@ module.exports.newRecipe = (req, res) => {
         for (const i in result) {
           if (result.hasOwnProperty(i) && i !== 'ingredient') {
             const temp = response.split(result[i])[1].split(' ');
-            result[i] = temp[2] || 'no data found';
+            result[i] = temp[2] || 0;
             // normalize if mg, we want everything in g
             if (temp[3] === 'mg') {
               result[i] /= 1000;
+            }
+            // normalize for microgram, we still want everything in g
+            if (urlencode(temp[3]) === '%C2%B5g') {
+              result[i] /= 100000;
             }
             total[i] += Math.round(parseFloat(result[i]) * 100) / 100;
             serving[i] += Math.round((parseFloat(result[i]) / req.body.numServings) * 100) / 100;
@@ -82,6 +86,7 @@ module.exports.newRecipe = (req, res) => {
   })).then((data) => {
     data.push(total);
     data.push(serving);
+    // don't do this in real life. pls
     console.log('Totals:');
     console.log(total);
     console.log('\n\nServings (' + req.body.numServings + '):');
