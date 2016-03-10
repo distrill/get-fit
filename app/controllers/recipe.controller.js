@@ -2,7 +2,7 @@
 
 const rp = require('request-promise');
 const urlencode = require('urlencode');
-
+const Recipe = require('./../models/recipe.model');
 const config = require('../../config/config');
 
 module.exports.renderNewRecipe = (req, res) => {
@@ -12,6 +12,7 @@ module.exports.renderNewRecipe = (req, res) => {
 };
 
 module.exports.newRecipe = (req, res) => {
+  console.log('new recipe');
   // initial total values, will be incremented as ingredients are added
   const total = {
     totalCalories: 0,
@@ -78,19 +79,29 @@ module.exports.newRecipe = (req, res) => {
             serving[i] += Math.round((parseFloat(result[i]) / req.body.numServings) * 100) / 100;
           }
         }
+        console.log(result);
         return result;
       })
       .catch((err) => {
         console.log(err);
       });
   })).then((data) => {
-    data.push(total);
-    data.push(serving);
-    // don't do this in real life. pls
-    console.log('Totals:');
-    console.log(total);
-    console.log('\n\nServings (' + req.body.numServings + '):');
-    console.log(serving);
-    res.json(data);
+    const newRecipe = new Recipe();
+    newRecipe.name = 'something for now';
+    newRecipe.servings = req.body.numServings;
+    newRecipe.ingredients = data;
+    newRecipe.total = total;
+    newRecipe.serving = serving;
+    if (req.user) {
+      newRecipe.user = req.user.facebook.id;
+      newRecipe.save((err) => {
+        if (err) {
+          throw err;
+        }
+        res.json(newRecipe);
+      });
+    } else {
+      res.json(newRecipe);
+    }
   });
 };
