@@ -15,10 +15,14 @@ angular.module('getFit')
 
       .state('home', {
         url: '/home',
-        templateUrl: 'views/example.view.html',
+        templateUrl: 'views/recipes.view.html',
       })
       .state('login', {
         url: '/login',
         templateUrl: 'views/login.view.html',
+      })
+      .state('new', {
+        url: '/new',
+        templateUrl: 'views/edit.recipe.view.html',
       });
   });

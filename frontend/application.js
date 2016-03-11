@@ -1,1 +1,1 @@
-angular.module('getFit', ['example', 'ui.router']);
+angular.module('getFit', ['example', 'recipe', 'ui.router']);

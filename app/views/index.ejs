@@ -1,34 +1,30 @@
-<!DOCTYPE html>
-<html xmlns:ng="http://angularjs.org">
-    <head>
-        <title>Get Fit</title>
-        <link type="text/css" rel="stylesheet" href="/public/styles/css/stylesheet.css"/>
-        <link type="text/css" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"/>
-        <link type="text/css" rel="stylesheet" href="http://bulma.io/css/main.css"/>
-    </head>
-    <body ng-app="getFit">
+<% include partials/head.ejs %>
+<% include partials/navbar.ejs %>
 
-      <!-- angular application -->
-      <div class="container">
+<!-- angular application -->
+<main class="site-content">
+  <div class="container">
+    <ui-view autoscroll="false"></ui-view>
+  </div>
+</main><!-- end angular application -->
 
-        <ui-view autoscroll="false"></ui-view>
+<!-- begin scripts. should probably browserify at some point.. -->
+<!-- external angular modules, installed with bower -->
+<script src="/node_modules/angular/angular.js"></script>
+<script src="/node_modules/ui-router/release/angular-ui-router.js"></script>
 
-      </div>
+<!-- our own modules -->
+<script src="/modules/example.module.js"></script>
+<script src="/modules/recipe.module.js"></script>
 
-        <!-- external angular modules, installed with bower -->
-        <script src="/node_modules/angular/angular.js"></script>
-        <script src="/node_modules/ui-router/release/angular-ui-router.js"></script>
+<!-- our own controllers, should match up with modules -->
+<script src="/controllers/example.controller.js"></script>
+<script src="/controllers/recipe.controller.js"></script>
 
-        <!-- our own modules -->
-        <script src="/modules/example.module.js"></script>
+<!-- bootstrap our application -->
+<script src="/application.js"></script>
 
-        <!-- our own controllers, should match up with modules -->
-        <script src="/controllers/example.controller.js"></script>
+<!-- routes! -->
+<script src="/config/application.routes.js"></script>
 
-        <!-- bootstrap our application -->
-        <script src="/application.js"></script>
-
-        <!-- routes! -->
-        <script src="/config/application.routes.js"></script>
-    </body>
-</html>
+<% include partials/footer.ejs %>
