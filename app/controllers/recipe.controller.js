@@ -11,6 +11,22 @@ module.exports.renderNewRecipe = (req, res) => {
   });
 };
 
+module.exports.getUserRecipes = (req, res) => {
+  console.log(req);
+  console.log('user: ');
+  console.log(req.user);
+  Recipe.find({
+    user: req.user.facebook.id,
+  }, (err, recipes) => {
+    if (err) {
+      throw err;
+    } else {
+      res.json(recipes);
+      // process.exit();
+    }
+  });
+};
+
 module.exports.newRecipe = (req, res) => {
   console.log('new recipe');
   // initial total values, will be incremented as ingredients are added

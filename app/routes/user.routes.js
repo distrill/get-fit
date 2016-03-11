@@ -2,11 +2,19 @@ module.exports = (app, passport) => {
   // home page
   app.route('/')
     .get((req, res) => {
+      console.log(req);
       if (req.user) {
-        res.render('newRecipe.ejs', {});
+        res.render('index', {
+          user: req.user,
+        });
       } else {
-        res.render('index.ejs', {});
+        res.redirect('/login');
       }
+    });
+
+  app.route('/login')
+    .get((req, res) => {
+      res.render('login');
     });
 
   // facebook
@@ -14,23 +22,23 @@ module.exports = (app, passport) => {
     .get(passport.authenticate('facebook', { scope: 'email' }));
   app.route('/auth/facebook/callback')
     .get(passport.authenticate('facebook', {
-      successRedirect: '/start',
-      failureRedirect: '/',
+      successRedirect: '/#/',
+      failureRedirect: '/login',
     }));
 
-  app.route('/login/success')
-    .get((req, res) => {
-      res.json({
-        user: req.user,
-      });
-    });
+  // app.route('/login/success')
+  //   .get((req, res) => {
+  //     res.json({
+  //       user: req.user,
+  //     });
+  //   });
 
-  app.route('/login/failure')
-    .get((req, res) => {
-      res.json({
-        error: 'login failure',
-      });
-    });
+  // app.route('/login/failure')
+  //   .get((req, res) => {
+  //     res.json({
+  //       error: 'login failure',
+  //     });
+  //   });
 
   // profile page
   app.route('/profile', isLoggedIn)

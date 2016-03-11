@@ -26,4 +26,10 @@
 .site-content {
   flex: 1; }
 
+.footer {
+  padding-bottom: 40px !important; }
+
+.login-content {
+  padding-top: 10%; }
+
 /*# sourceMappingURL=stylesheet.css.map */

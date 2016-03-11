@@ -1,0 +1,25 @@
+<section
+  ng-controller=recipeController
+  class="edit-recipe-content">
+  <h1>New Recipe</h1>
+  <form method="post">
+    <input
+      ng-model="recipeName"
+      type="text"
+      name="name"
+      placeholder="recipe name"><br>
+    <textarea
+      ng-model="recipeInput"
+      type="text"
+      name="recipeInput"
+      placeholder="recipe ingredients">
+    </textarea><br>
+    <input
+      ng-model="numServings"
+      type="text"
+      name="numServings"
+      placeholder="number of servings"><br>
+    <button ng-click="saveRecipe()">
+    <!-- <input type="submit"> -->
+  </form>
+</section>
