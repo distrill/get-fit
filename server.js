@@ -23,7 +23,7 @@ app.use(bodyParser.json());
 
 app.set('views', './app/views');
 app.set('view engine', 'ejs');
-app.use(express.static('./public'));
+app.use(express.static('./frontend'));
 
 // passport
 app.use(session({

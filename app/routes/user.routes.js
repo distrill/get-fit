@@ -3,9 +3,9 @@ module.exports = (app, passport) => {
   app.route('/')
     .get((req, res) => {
       if (req.user) {
-        res.render('newRecipe', {});
+        res.render('newRecipe.ejs', {});
       } else {
-        res.render('index', {});
+        res.render('index.ejs', {});
       }
     });
 
@@ -17,6 +17,20 @@ module.exports = (app, passport) => {
       successRedirect: '/start',
       failureRedirect: '/',
     }));
+
+  app.route('/login/success')
+    .get((req, res) => {
+      res.json({
+        user: req.user,
+      });
+    });
+
+  app.route('/login/failure')
+    .get((req, res) => {
+      res.json({
+        error: 'login failure',
+      });
+    });
 
   // profile page
   app.route('/profile', isLoggedIn)

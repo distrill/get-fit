@@ -1,0 +1,46 @@
+$blue: #42afe3;
+$grey-lighter:	#f5f7fa;
+
+.navbar {
+  height: 4rem;
+  background: black;
+  a {
+    &:hover {
+      color: #e6e6e6;
+    }
+  }
+  .logo {
+    font-size: 1.5rem;
+    color: #e6e6e6;
+  }
+}
+
+.box {
+  &:hover {
+    // background: $grey-lighter;
+    .media {
+      color: $blue;
+    }
+    small {
+      color: black;
+    }
+  }
+}
+
+.media {
+  color: black;
+}
+
+.center {
+  margin: 5%;
+}
+
+.site {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+.site-content {
+  flex: 1;
+}
