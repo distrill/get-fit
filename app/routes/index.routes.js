@@ -2,5 +2,7 @@
 //
 // module.exports = function indexRoutes(app) {
 //   app.route('/')
-//     .get(index.renderIndex);
+//     .get((req, res) => {
+//       res.sendFile('frontend/index.html');
+//     });
 // };

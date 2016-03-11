@@ -1,5 +1,10 @@
 'use strict';
 
+
+// TODO
+// pattern matching is fragile atm, so if sugar is an ingredient it will not
+// get the actual value, but split too early.
+// any other similar conflicts?
 const rp = require('request-promise');
 const urlencode = require('urlencode');
 const Recipe = require('./../models/recipe.model');
@@ -51,7 +56,7 @@ module.exports.newRecipe = (req, res) => {
       .then((response) => {
         // init values to swap out from plaintext
         const result = {
-          ingredient: item,
+          name: item,
           totalCalories: 'total calories',
           totalFat: 'total fat',
           saturatedFat: 'saturated fat',
@@ -64,8 +69,12 @@ module.exports.newRecipe = (req, res) => {
         };
         // hacky value-swap in plain-text
         for (const i in result) {
-          if (result.hasOwnProperty(i) && i !== 'ingredient') {
-            const temp = response.split(result[i])[1].split(' ');
+          if (result.hasOwnProperty(i) && i !== 'name') {
+            // split on 'serving size' to get rid of extra text before
+            // this helps when ingredient is the same as one of the nutrition
+            // facts. most commonly (or only) sugar.
+            const nutrition = response.split('serving size')[1];
+            const temp = nutrition.split(result[i])[1].split(' ');
             result[i] = temp[2] || 0;
             // normalize if mg, we want everything in g
             if (temp[3] === 'mg') {
@@ -87,8 +96,8 @@ module.exports.newRecipe = (req, res) => {
       });
   })).then((data) => {
     const newRecipe = new Recipe();
-    newRecipe.name = 'something for now';
-    newRecipe.servings = req.body.numServings;
+    newRecipe.name = req.body.name || 'New Recipe';
+    newRecipe.servings = req.body.numServings || 1;
     newRecipe.ingredients = data;
     newRecipe.total = total;
     newRecipe.serving = serving;
