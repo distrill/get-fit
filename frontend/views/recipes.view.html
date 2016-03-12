@@ -1,3 +1,14 @@
 <section ng-controller=recipeController>
-  <div ng-repeat="recipe in recipes">{{recipe}}</div>
+  <div class="title is-2 is-text-centered">Your Recipes</div>
+  <div ng-show="recipes.length===0" class="title is-4 is-text-centered no-recipes">
+    You don't have any recipes yet.<br>
+    Get started <a href="/#/newRecipe">here</a>!
+  </div>
+  <div class="columns is-multiline" ng-show="recipes.length!==0">
+    <div ng-repeat="r in recipes"
+      class="column is-6 is-offset-3 simple-recipe-element"
+      ng-click="loadDetail($index)">
+      <simple-recipe recipe="r"></simple-recipe><br><br>
+    </div>
+  </div>
 </section>

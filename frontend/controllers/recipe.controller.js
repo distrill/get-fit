@@ -1,14 +1,8 @@
 angular.module('recipe').controller('recipeController', [
   '$scope',
   '$http',
-  ($scope, $http) => {
-
-    // testing testing
-    $scope.test = 'what the heck';
-
-    $scope.saveRecipe = () => {
-      console.log($scope.recipeName, $scope.recipeInput, $scope.numServings);
-    };
+  'applicationState',
+  ($scope, $http, applicationState) => {
 
     // inital load event to get user recipes
     $http({
@@ -16,10 +10,26 @@ angular.module('recipe').controller('recipeController', [
       url: '/getUserRecipes',
     }).then((response) => {
       $scope.recipes = response.data;
-      console.log(response);
     }, (response) => {
       // failure
       console.log(response);
     });
+
+    // get tabs ready for detail page
+    $scope.tab = {};
+    $scope.tab.serving = true;
+    $scope.tab.tabButton = () => {
+      $scope.tab.serving = !$scope.tab.serving;
+    };
+    $scope.detail = applicationState.detail || 0;
+
+    $scope.saveRecipe = () => {
+      console.log($scope.recipeName, $scope.recipeInput, $scope.numServings);
+    };
+
+    $scope.loadDetail = (ind) => {
+      $scope.detail = applicationState.detail = ind;
+      window.location.href = '/#/detail';
+    };
   },
 ]);

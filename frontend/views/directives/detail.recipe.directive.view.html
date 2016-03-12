@@ -1,0 +1,114 @@
+<div class="container">
+      <div class="columns">
+
+      <div class="column box is-8 is-offset-2">
+        <div class="recipe-name title is-3 is-text-centered">
+          {{recipeInfo.name}}
+        </div>
+          <div class="tabs is-boxed is-fullwidth is-centered">
+            <ul>
+              <li ng-class="{'is-active':  tab.serving}"
+                ng-click="tab.tabButton()">
+                <a>serving</a>
+              </li>
+              <li ng-class="{'is-active': !tab.serving}"
+                ng-click="tab.tabButton()">
+                <a>total</a>
+              </li>
+            </ul>
+          </div>
+        <div class="columns">
+
+          <!-- show for single serving -->
+          <table class="column is-10 is-offset-1 nutrition-table" ng-show="tab.serving">
+            <tr class="nutrition-row">
+              <td>Total Calories</td>
+              <td>{{recipeInfo.serving.totalCalories}}</td>
+            </tr>
+            <tr class="nutrition-row">
+              <td>Total Fat</td>
+              <td>{{recipeInfo.serving.totalFat}} g</td>
+            </tr>
+            <tr class="nutrition-row">
+              <td>Saturated Fat</td>
+              <td>{{recipeInfo.serving.saturatedFat}} g</td>
+            </tr>
+            <tr class="nutrition-row">
+              <td>Cholesterol</td>
+              <td>{{recipeInfo.serving.cholesterol}} g</td>
+            </tr>
+            <tr class="nutrition-row">
+              <td>Total Carbohydrates</td>
+              <td>{{recipeInfo.serving.totalCarbohydrates}} g</td>
+            </tr>
+            <tr class="nutrition-row">
+              <td>Sodium</td>
+              <td>{{recipeInfo.serving.sodium}} g</td>
+            </tr>
+            <tr class="nutrition-row">
+              <td>Fiber</td>
+              <td>{{recipeInfo.serving.fiber}} g</td>
+            </tr>
+            <tr class="nutrition-row">
+              <td>Sugar</td>
+              <td>{{recipeInfo.serving.sugar}} g</td>
+            </tr>
+            <tr class="nutrition-row">
+              <td>Protein</td>
+              <td>{{recipeInfo.serving.protein}} g</td>
+            </tr>
+          </table>
+
+          <!-- show for total servings -->
+          <table class="column is-10 is-offset-1 nutrition-table" ng-show="!tab.serving">
+            <tr class="nutrition-row">
+              <td>Total Calories</td>
+              <td>{{recipeInfo.total.totalCalories}}</td>
+            </tr>
+            <tr class="nutrition-row">
+              <td>Total Fat</td>
+              <td>{{recipeInfo.total.totalFat}} g</td>
+            </tr>
+            <tr class="nutrition-row">
+              <td>Saturated Fat</td>
+              <td>{{recipeInfo.total.saturatedFat}} g</td>
+            </tr>
+            <tr class="nutrition-row">
+              <td>Cholesterol</td>
+              <td>{{recipeInfo.total.cholesterol}} g</td>
+            </tr>
+            <tr class="nutrition-row">
+              <td>Total Carbohydrates</td>
+              <td>{{recipeInfo.total.totalCarbohydrates}} g</td>
+            </tr>
+            <tr class="nutrition-row">
+              <td>Sodium</td>
+              <td>{{recipeInfo.total.sodium}} g</td>
+            </tr>
+            <tr class="nutrition-row">
+              <td>Fiber</td>
+              <td>{{recipeInfo.total.fiber}} g</td>
+            </tr>
+            <tr class="nutrition-row">
+              <td>Sugar</td>
+              <td>{{recipeInfo.total.sugar}} g</td>
+            </tr>
+            <tr class="nutrition-row">
+              <td>Protein</td>
+              <td>{{recipeInfo.total.protein}} g</td>
+            </tr>
+          </table>
+
+        </div>
+        <div class="card recipe-description is-text-centered">
+          <p>Contains ({{recipeInfo.servings}} servings):<br>
+            <span ng-repeat="n in recipeInfo.ingredients">
+              {{n.ingredient}}<br>
+            </span></p>
+        </p>
+        </div>
+      </div>
+
+
+  </div>
+</div>

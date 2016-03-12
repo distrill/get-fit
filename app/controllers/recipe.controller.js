@@ -12,9 +12,6 @@ module.exports.renderNewRecipe = (req, res) => {
 };
 
 module.exports.getUserRecipes = (req, res) => {
-  console.log(req);
-  console.log('user: ');
-  console.log(req.user);
   Recipe.find({
     user: req.user.facebook.id,
   }, (err, recipes) => {
@@ -82,7 +79,7 @@ module.exports.newRecipe = (req, res) => {
         for (const i in result) {
           if (result.hasOwnProperty(i) && i !== 'ingredient') {
             const temp = response.split(result[i])[1].split(' ');
-            result[i] = temp[2] || 0;
+            result[i] = parseFloat(temp[2]) || 0;
             // normalize if mg, we want everything in g
             if (temp[3] === 'mg') {
               result[i] /= 1000;
@@ -91,8 +88,8 @@ module.exports.newRecipe = (req, res) => {
             if (urlencode(temp[3]) === '%C2%B5g') {
               result[i] /= 100000;
             }
-            total[i] += Math.round(parseFloat(result[i]) * 100) / 100;
-            serving[i] += Math.round((parseFloat(result[i]) / req.body.numServings) * 100) / 100;
+            total[i] += result[i];
+            serving[i] += result[i];
           }
         }
         console.log(result);
@@ -103,9 +100,16 @@ module.exports.newRecipe = (req, res) => {
       });
   })).then((data) => {
     const newRecipe = new Recipe();
-    newRecipe.name = 'something for now';
+    newRecipe.name = req.body.name;
     newRecipe.servings = req.body.numServings;
     newRecipe.ingredients = data;
+    // damnit sanitize again
+    for (const i in total) {
+      if (total.hasOwnProperty(i)) {
+        total[i] = (Number(Math.round(total[i]) + 'e2') + 'e-2');
+        serving[i] = (Number(Math.round(serving[i]) + 'e2') + 'e-2');
+      }
+    }
     newRecipe.total = total;
     newRecipe.serving = serving;
     if (req.user) {
