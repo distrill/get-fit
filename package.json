@@ -3,11 +3,11 @@
   "version": "0.0.1",
   "description": "fitness application utilizing wolfram-fit package",
   "main": "server.js",
+  "author": "Brent Hamilton",
+  "license": "MIT",
   "scripts": {
     "start": "nodemon server.js"
   },
-  "author": "Brent Hamilton",
-  "license": "MIT",
   "devDependencies": {
     "babel-cli": "^6.4.5",
     "babel-core": "^6.4.5",
