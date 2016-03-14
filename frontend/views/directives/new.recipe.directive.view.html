@@ -1,0 +1,70 @@
+<div class="container">
+  <div class="columns is-multiline">
+
+    <!-- main form whatever box whatever -->
+    <div class="column is-6 is-offset-3 box new-recipe-wrap">
+      <div class="is-text-centered">
+        <span class="title is-2 is-text-">Add a Recipe</span>
+      </div><br>
+
+      <!-- name and servings. always shown -->
+      <form class="new-recipe-form">
+        <p class="control is-grouped">
+          <input type="text"
+                 class="input is-large is-info new-elem"
+                 placeholder="name"
+                 ng-model="tab.recipe.name">
+          <input type="text"
+                 class="input is-large is-info new-elem new-elem-name"
+                 placeholder="servings"
+                 ng-model="tab.recipe.servings">
+        </p>
+
+        <!-- field separated inputs. show instead of csv -->
+        <div ng-show="!tab.csv">
+          <p class="control is-grouped"
+            ng-repeat="i in tab.values track by $index">
+            <input type="text"
+              class="input is-large is-primary new-elem"
+              ng-model="i.name">
+            <button
+              class="button is-large is-primary is-outlined rem-new-elem"
+              ng-click="tab.delete($index)">
+              <i class="fa fa-times fit-danger"></i>
+            </button>
+          </p>
+        </div>
+
+        <!-- single text input. show instead of fields -->
+        <div ng-show="tab.csv">
+          <p class="control is-grouped">
+            <textarea class="textarea is-primary new-elem"
+              placeholder="input ingredients list here, separated by commas"
+              ng-model="tab.recipe.csv">
+            </textarea>
+          </p>
+        </div>
+
+        <!-- submit, always shown -->
+        <div class="is-text-centered">
+          <br>
+          <button class="button is-info"
+            ng-click="tab.saveRecipe()">
+            Submit
+          </button>
+        </div>
+      </form>
+
+      <!-- button to show csv. show if not csv -->
+      <div class="is-text-right change-input" ng-show="!tab.csv">
+        <a ng-click="tab.csvButton()">csv input -></a>
+      </div>
+      <!-- button to show fields. show if already csv -->
+      <div class="is-text-left change-input" ng-show="tab.csv">
+        <a ng-click="tab.csvButton()"><- individual fields</a>
+      </div>
+
+    </div>
+
+  </div>
+</div>

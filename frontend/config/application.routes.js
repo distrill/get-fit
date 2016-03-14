@@ -17,6 +17,10 @@ angular.module('getFit')
         url: '/home',
         templateUrl: 'views/recipes.view.html',
       })
+      .state('detail', {
+        url: '/detail',
+        templateUrl: 'views/detail.recipe.view.html',
+      })
       .state('login', {
         url: '/login',
         templateUrl: 'views/login.view.html',

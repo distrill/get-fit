@@ -3,7 +3,7 @@
 const mongoose = require('mongoose');
 
 const ingredientSchema = mongoose.Schema({
-  name: String,
+  ingredient: String,
   totalCalories: Number,
   totalFat: Number,
   saturatedFat: Number,
@@ -22,6 +22,10 @@ const recipeSchema = mongoose.Schema({
   ingredients: [ingredientSchema],
   total: ingredientSchema,
   serving: ingredientSchema,
+  date: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
 module.exports = mongoose.model('Recipe', recipeSchema);

@@ -1,0 +1,17 @@
+<div class="box simple-view-container">
+  <article class="media">
+    <div class="media-content">
+      <div class="content">
+        <p>
+          <strong>{{recipeInfo.name}}:</strong>
+          <small>#{{recipeInfo.servings}} servings</small>,
+          <small>@{{recipeInfo.ingredients.length}} ingredients</small>
+          <br>
+          <span ng-repeat="ingredient in recipeInfo.ingredients">
+            {{ingredient.ingredient}}.
+          </span>
+        </p>
+      </div>
+    </div>
+  </article>
+</div>

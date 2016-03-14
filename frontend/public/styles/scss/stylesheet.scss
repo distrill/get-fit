@@ -16,15 +16,7 @@ $grey-lighter:	#f5f7fa;
 }
 
 .box {
-  &:hover {
-    // background: $grey-lighter;
-    .media {
-      color: $blue;
-    }
-    small {
-      color: black;
-    }
-  }
+
 }
 
 .media {
@@ -51,4 +43,111 @@ $grey-lighter:	#f5f7fa;
 
 .login-content {
   padding-top: 10%;
+}
+
+.simple-recipe-element {
+  margin: 1rem 0 -3.5rem 0;
+  cursor: pointer;
+  position: relative;
+  &:hover {
+    .remove-recipe {
+      visibility: visible;
+    }
+  }
+}
+
+.no-recipes {
+  margin: 4rem;
+}
+
+.nutrition-row {
+  border: solid 1px black;
+  td {
+    padding: 0.25rem 2rem;
+    // text-align: center;
+    &:last-of-type {
+      text-align: center;
+    }
+  }
+}
+
+.recipe-name {
+  padding: 1rem;
+  padding-bottom: 0;
+}
+
+.recipe-description {
+  // width: 80%;
+  margin: auto;
+  p {
+    padding: 1rem;
+    margin: 1rem;
+  }
+}
+
+.detail-card {
+  margin: 3rem;
+}
+
+.new-elem {
+  font-size: 1rem !important;
+  color: black !important;
+}
+
+.fit-danger {
+  color: #ed6c63;
+}
+
+.new-elem-name {
+  width: 30% !important;
+}
+
+.rem-new-elem {
+  &:hover {
+    background-color: $grey-lighter !important;
+  }
+}
+
+.change-input {
+  margin: -5px 10px 5px;
+}
+
+.new-recipe-form {
+  padding: 0 15px;
+}
+
+.new-recipe-wrap {
+  margin-top: 40px;
+}
+
+.simple-view-container {
+  position: relative;
+  &:hover {
+      .media {
+        color: $blue;
+      }
+      .remove-recipe {
+        visibility: visible;
+      }
+      small {
+        color: black;
+      }
+    }
+}
+
+.remove-recipe {
+  z-index: 100;
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 10px;
+  padding: 5px;
+  visibility: hidden;
+  &:hover {
+    background: $grey-lighter;
+  }
+}
+
+.cancel-button {
+  margin-left: 5px;
 }
