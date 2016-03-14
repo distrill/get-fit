@@ -4,7 +4,7 @@
   "description": "fitness application utilizing wolfram-fit package",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon server.js"
+    "start": "node server.js"
   },
   "author": "Brent Hamilton",
   "license": "MIT",
