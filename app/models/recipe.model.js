@@ -22,6 +22,10 @@ const recipeSchema = mongoose.Schema({
   ingredients: [ingredientSchema],
   total: ingredientSchema,
   serving: ingredientSchema,
+  date: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
 module.exports = mongoose.model('Recipe', recipeSchema);

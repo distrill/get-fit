@@ -7,11 +7,6 @@
     font-size: 1.5rem;
     color: #e6e6e6; }
 
-.box:hover .media {
-  color: #42afe3; }
-.box:hover small {
-  color: black; }
-
 .media {
   color: black; }
 
@@ -34,7 +29,8 @@
 
 .simple-recipe-element {
   margin: 1rem 0 -3.5rem 0;
-  cursor: pointer; }
+  cursor: pointer;
+  position: relative; }
 
 .no-recipes {
   margin: 4rem; }
@@ -58,5 +54,49 @@
 
 .detail-card {
   margin: 3rem; }
+
+.new-elem {
+  font-size: 1rem !important;
+  color: black !important; }
+
+.fit-danger {
+  color: #ed6c63; }
+
+.new-elem-name {
+  width: 30% !important; }
+
+.rem-new-elem:hover {
+  background-color: #f5f7fa !important; }
+
+.change-input {
+  margin: -5px 10px 5px; }
+
+.new-recipe-form {
+  padding: 0 15px; }
+
+.new-recipe-wrap {
+  margin-top: 40px; }
+
+.simple-view-container {
+  position: relative; }
+  .simple-view-container:hover .media {
+    color: #42afe3; }
+  .simple-view-container:hover .remove-recipe {
+    visibility: visible; }
+  .simple-view-container:hover small {
+    color: black; }
+
+.remove-recipe {
+  z-index: 100;
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 10px;
+  padding: 5px; }
+  .remove-recipe:hover {
+    background: #f5f7fa; }
+
+.cancel-button {
+  margin-left: 5px; }
 
 /*# sourceMappingURL=stylesheet.css.map */

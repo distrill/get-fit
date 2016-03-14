@@ -6,9 +6,46 @@
   </div>
   <div class="columns is-multiline" ng-show="recipes.length!==0">
     <div ng-repeat="r in recipes"
-      class="column is-6 is-offset-3 simple-recipe-element"
-      ng-click="loadDetail($index)">
-      <simple-recipe recipe="r"></simple-recipe><br><br>
+      class="column is-6 is-offset-3 simple-recipe-element">
+      <div
+        class="is-large remove-recipe"
+        ng-click="openModal($index)">
+        <i class="fa fa-times fit-danger"></i>
+      </div>
+      <simple-recipe tab="tab"
+        recipe="r"
+        ng-click="loadDetail($index)"></simple-recipe><br><br>
     </div>
   </div>
+
+  <!-- confirm delete-recipe modal -->
+  <div class="modal" ng-class="{'is-active': modal}">
+    <div class="modal-background" ng-click="closeModal()"></div>
+    <div class="modal-container">
+      <div class="modal-content">
+        <div class="message">
+          <div class="message-header">
+            Confirm Deletion
+          </div>
+          <div class="message-body">
+            Are you sure you want to delete {{recipes[removeIndex].name}}?<br>
+            This action cannot be undone.
+            <div class="is-text-right remove-button">
+              <button class="button is-info"
+              ng-click="removeRecipe()">
+              Delete
+            </button>
+            <button class="button cancel-button"
+              ng-click="closeModal()">
+              Cancel
+          </button>
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button class="modal-close"
+      ng-click="closeModal()"></button>
+  </div>
+
 </section>
