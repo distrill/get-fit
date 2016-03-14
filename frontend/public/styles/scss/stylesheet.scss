@@ -49,6 +49,11 @@ $grey-lighter:	#f5f7fa;
   margin: 1rem 0 -3.5rem 0;
   cursor: pointer;
   position: relative;
+  &:hover {
+    .remove-recipe {
+      visibility: visible;
+    }
+  }
 }
 
 .no-recipes {
@@ -137,7 +142,7 @@ $grey-lighter:	#f5f7fa;
   right: 0;
   margin: 10px;
   padding: 5px;
-  // visibility: hidden;
+  visibility: hidden;
   &:hover {
     background: $grey-lighter;
   }

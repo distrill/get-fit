@@ -31,6 +31,8 @@
   margin: 1rem 0 -3.5rem 0;
   cursor: pointer;
   position: relative; }
+  .simple-recipe-element:hover .remove-recipe {
+    visibility: visible; }
 
 .no-recipes {
   margin: 4rem; }
@@ -92,7 +94,8 @@
   top: 0;
   right: 0;
   margin: 10px;
-  padding: 5px; }
+  padding: 5px;
+  visibility: hidden; }
   .remove-recipe:hover {
     background: #f5f7fa; }
 
