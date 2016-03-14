@@ -1,3 +1,3 @@
 module.exports = {
-  url: 'mongodb://localhost/get-fit-dev',
+  url: process.env.MONGOLAB_URI || 'mongodb://localhost/get-fit-dev',
 };
