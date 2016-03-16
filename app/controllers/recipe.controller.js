@@ -97,7 +97,7 @@ module.exports.newRecipe = (req, res) => {
               result[i] /= 100000;
             }
             total[i] += result[i];
-            serving[i] += result[i] / numServings;
+            serving[i] += result[i] / servings;
           }
         }
         console.log(result);
