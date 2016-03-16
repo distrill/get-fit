@@ -109,6 +109,8 @@ angular.module('recipe').controller('recipeController', [
     $scope.tab.saveRecipe = () => {
       // validate that servings is number
       // validate that name is non-empty
+      $window.alert('alert is so butthole sorry and am working on proper modal' +
+        'just to say that wolfram is processing your request.');
       // hit save recipe endpoint
       const req = {
         method: 'POST',
@@ -128,7 +130,7 @@ angular.module('recipe').controller('recipeController', [
           if (response.data.error) {
             $window.location.href = '/';
           } else {
-            $window.location.href = '/#/home';
+            $window.location.href = '/#/';
           }
         }, (response) => {
           // failure :(
@@ -172,6 +174,8 @@ angular.module('recipe').controller('recipeController', [
       }
       return values;
     };
+
+    $scope.initVals = ['list ingredients here'];
 
   },
 ]);

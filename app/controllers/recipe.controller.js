@@ -32,6 +32,8 @@ module.exports.getUserRecipes = (req, res) => {
 
 module.exports.newRecipe = (req, res) => {
   try {
+    // is there servings?
+    const servings = req.body.numServings || 1;
     // initial total values, will be incremented as ingredients are added
     const total = {
       totalCalories: 0,
@@ -95,7 +97,7 @@ module.exports.newRecipe = (req, res) => {
               result[i] /= 100000;
             }
             total[i] += result[i];
-            serving[i] += result[i];
+            serving[i] += result[i] / numServings;
           }
         }
         console.log(result);
