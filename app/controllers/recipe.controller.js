@@ -139,47 +139,40 @@ module.exports.newRecipe = (req, res) => {
 
 module.exports.deleteRecipe = (req, res) => {
   try {
-    // res.send(200);
-    try {
-      // find and remove element in question
-      Recipe.findOne({
-        _id: req.body.recipe._id,
-      }, (err, recipe) => {
-        if (err) {
-          // error handle
-          res.json({
-            error: err,
-          });
-        } else {
-          recipe.remove((delErr) => {
-            if (delErr) {
-              res.json({
-                error: delErr,
-              });
-            } else {
-              // successful remove
-              Recipe.find({
-                user: req.user.facebook.id,
-              }, (findErr, recipes) => {
-                if (findErr) {
-                  // basic error handle
-                  res.json({
-                    error: findErr,
-                  });
-                } else {
-                  // return user's remaining recipes
-                  res.json(recipes);
-                }
-              });
-            }
-          });
-        }
-      });
-    } catch (e) {
-      res.json({
-        error: e,
-      });
-    }
+    // find and remove element in question
+    Recipe.findOne({
+      _id: req.body.recipe._id,
+    }, (err, recipe) => {
+      if (err) {
+        // error handle
+        res.json({
+          error: err,
+        });
+      } else {
+        recipe.remove((delErr) => {
+          if (delErr) {
+            res.json({
+              error: delErr,
+            });
+          } else {
+            // successful remove
+            Recipe.find({
+              user: req.user.facebook.id,
+            }, (findErr, recipes) => {
+              if (findErr) {
+                // basic error handle
+                res.json({
+                  error: findErr,
+                });
+              } else {
+                // return user's remaining recipes
+                res.json(recipes);
+              }
+            });
+          }
+        });
+      }
+    });
   } catch (e) {
     res.json({
       error: e,
