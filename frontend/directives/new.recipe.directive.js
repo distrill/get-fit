@@ -4,6 +4,7 @@ angular.module('recipe')
       restrict: 'E',
       scope: {
         tab: '=tab',
+        new: '=new',
       },
       templateUrl: 'views/directives/new.recipe.directive.view.html',
     };

@@ -31,6 +31,7 @@ module.exports.getUserRecipes = (req, res) => {
 };
 
 module.exports.newRecipe = (req, res) => {
+  const numServings = req.body.numServings || 1;
   try {
     // initial total values, will be incremented as ingredients are added
     const total = {
@@ -95,7 +96,7 @@ module.exports.newRecipe = (req, res) => {
               result[i] /= 100000;
             }
             total[i] += result[i];
-            serving[i] += result[i];
+            serving[i] += result[i] / numServings;
           }
         }
         console.log(result);
@@ -112,8 +113,8 @@ module.exports.newRecipe = (req, res) => {
       // damnit sanitize again
       for (const i in total) {
         if (total.hasOwnProperty(i)) {
-          total[i] = (Number(Math.round(total[i]) + 'e2') + 'e-2');
-          serving[i] = (Number(Math.round(serving[i]) + 'e2') + 'e-2');
+          total[i] = toFixedDown(total[i], 2);
+          serving[i] = toFixedDown(serving[i], 2);
         }
       }
       newRecipe.total = total;
@@ -178,4 +179,10 @@ module.exports.deleteRecipe = (req, res) => {
       error: e,
     });
   }
+};
+
+const toFixedDown = (num, digits) => {
+  const re = new RegExp('(\\d+\\.\\d{' + digits + '})(\\d)');
+  const m = num.toString().match(re);
+  return m ? parseFloat(m[1]) : num.valueOf();
 };
