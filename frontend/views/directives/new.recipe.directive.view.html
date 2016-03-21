@@ -64,6 +64,17 @@
         <a ng-click="tab.csvButton()"><- individual fields</a>
       </div>
 
+      <!-- confirm delete-recipe modal -->
+      <div class="modal" ng-class="{'is-active': tab.modal}">
+        <div class="modal-background loading-modal"></div>
+        <div class="modal-container">
+          <div class="modal-content is-text-centered">
+            <i class="fa fa-cog fa-spin loading-spin"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
 
   </div>

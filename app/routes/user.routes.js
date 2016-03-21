@@ -14,6 +14,7 @@ module.exports = (app, passport) => {
 
   app.route('/login')
     .get((req, res) => {
+      console.log(process.env.NODE_ENV);
       res.render('login');
     });
 

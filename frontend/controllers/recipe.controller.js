@@ -4,12 +4,16 @@ angular.module('recipe').controller('recipeController', [
   '$scope',
   '$http',
   '$window',
+  '$timeout',
   'applicationState',
-  ($scope, $http, $window, applicationState) => {
+  ($scope, $http, $window, $timeout, applicationState) => {
 
     $scope.tab = {};
     $scope.detail = applicationState.detail || 0;
     $scope.removeIndex = 0;
+    $scope.new = {
+      modal: false,
+    };
 
     // inital load event to get user recipes
     $http({
@@ -29,6 +33,7 @@ angular.module('recipe').controller('recipeController', [
 
     // get tabs ready for detail page
     $scope.tab.serving = true;
+    $scope.tab.ingredients = false;
     $scope.tab.tabButton = () => {
       $scope.tab.serving = !$scope.tab.serving;
     };
@@ -70,6 +75,9 @@ angular.module('recipe').controller('recipeController', [
         $scope.tab.values.splice(index, 1);
       }
     };
+    $scope.tab.toggleIngredients = () => {
+      $scope.tab.ingredients = !$scope.tab.ingredients;
+    };
 
     $scope.openModal = (index) => {
       $scope.modal = true;
@@ -107,11 +115,10 @@ angular.module('recipe').controller('recipeController', [
     };
 
     $scope.tab.saveRecipe = () => {
-      // validate that servings is number
-      // validate that name is non-empty
-      $window.alert('alert is so butthole sorry and am working on proper modal' +
-        'just to say that wolfram is processing your request.');
-      // hit save recipe endpoint
+      // modal that shit. lettem know we know they hit the button
+      $scope.tab.modal = true;
+
+      // check for valid input (servings is number, name exists, etc)
       const req = {
         method: 'POST',
         url: '/newRecipe',
@@ -121,16 +128,19 @@ angular.module('recipe').controller('recipeController', [
           recipeInput: ($scope.tab.csv) ? $scope.tab.recipe.csv : getCSVFromFields(),
         },
       };
-      console.log(req);
       $http(req)
         .then((response) => {
           // success
-          console.log('success:');
-          console.log(response);
           if (response.data.error) {
             $window.location.href = '/';
           } else {
+<<<<<<< HEAD
             $window.location.href = '/#/';
+=======
+            // $window.location.href = '/#/home';
+            $scope.recipes.push(response.data);
+            $scope.loadDetail($scope.recipes.length - 1);
+>>>>>>> 3edc756bc6deb8d3be0d067a5f933b00495cfd35
           }
         }, (response) => {
           // failure :(
@@ -138,6 +148,9 @@ angular.module('recipe').controller('recipeController', [
           console.log(response);
           $window.location.href = '/';
         });
+    };
+    $scope.tab.closeModal = () => {
+      $scope.tab.modal = false;
     };
 
     $scope.loadDetail = (ind) => {
