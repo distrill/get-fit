@@ -114,8 +114,8 @@ module.exports.newRecipe = (req, res) => {
       // damnit sanitize again
       for (const i in total) {
         if (total.hasOwnProperty(i)) {
-          total[i] = (Number(Math.round(total[i]) + 'e2') + 'e-2');
-          serving[i] = (Number(Math.round(serving[i]) + 'e2') + 'e-2');
+          total[i] = toFixedDown(total[i], 2);
+          serving[i] = toFixedDown(serving[i], 2);
         }
       }
       newRecipe.total = total;
@@ -141,50 +141,49 @@ module.exports.newRecipe = (req, res) => {
 
 module.exports.deleteRecipe = (req, res) => {
   try {
-    // res.send(200);
-    try {
-      // find and remove element in question
-      Recipe.findOne({
-        _id: req.body.recipe._id,
-      }, (err, recipe) => {
-        if (err) {
-          // error handle
-          res.json({
-            error: err,
-          });
-        } else {
-          recipe.remove((delErr) => {
-            if (delErr) {
-              res.json({
-                error: delErr,
-              });
-            } else {
-              // successful remove
-              Recipe.find({
-                user: req.user.facebook.id,
-              }, (findErr, recipes) => {
-                if (findErr) {
-                  // basic error handle
-                  res.json({
-                    error: findErr,
-                  });
-                } else {
-                  // return user's remaining recipes
-                  res.json(recipes);
-                }
-              });
-            }
-          });
-        }
-      });
-    } catch (e) {
-      res.json({
-        error: e,
-      });
-    }
+    // find and remove element in question
+    Recipe.findOne({
+      _id: req.body.recipe._id,
+    }, (err, recipe) => {
+      if (err) {
+        // error handle
+        res.json({
+          error: err,
+        });
+      } else {
+        recipe.remove((delErr) => {
+          if (delErr) {
+            res.json({
+              error: delErr,
+            });
+          } else {
+            // successful remove
+            Recipe.find({
+              user: req.user.facebook.id,
+            }, (findErr, recipes) => {
+              if (findErr) {
+                // basic error handle
+                res.json({
+                  error: findErr,
+                });
+              } else {
+                // return user's remaining recipes
+                res.json(recipes);
+              }
+            });
+          }
+        });
+      }
+    });
   } catch (e) {
     res.json({
       error: e,
     });
   }
 };
+
+function toFixedDown(number, digits) {
+  const re = new RegExp('(\\d+\\.\\d{' + digits + '})(\\d)');
+  const m = number.toString().match(re);
+  return m ? parseFloat(m[1]) : number.valueOf();
+}
