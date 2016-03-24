@@ -183,16 +183,8 @@ module.exports.deleteRecipe = (req, res) => {
   }
 };
 
-<<<<<<< HEAD
-function toFixedDown(number, digits) {
-  const re = new RegExp('(\\d+\\.\\d{' + digits + '})(\\d)');
-  const m = number.toString().match(re);
-  return m ? parseFloat(m[1]) : number.valueOf();
-}
-=======
 const toFixedDown = (num, digits) => {
   const re = new RegExp('(\\d+\\.\\d{' + digits + '})(\\d)');
   const m = num.toString().match(re);
   return m ? parseFloat(m[1]) : num.valueOf();
 };
->>>>>>> 3edc756bc6deb8d3be0d067a5f933b00495cfd35
