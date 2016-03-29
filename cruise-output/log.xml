@@ -4,9 +4,11 @@
     <property name="logdir" value="/Users/arthur/Library/Application Support/Go Agent/pipelines/MyFirstPipeline/cruise-output" />
     <property name="logfile" value="log.xml" />
   </info>
-  <build time="0 minute(s) 0 second(s)" error="return code is 127">
+  <build error="exec error">
     <target name="exec">
-      <task name="./build" />
+      <task name="npm install">
+        <message priority="error"><![CDATA[Could not execute command: npm install]]></message>
+      </task>
     </target>
   </build>
 </cruisecontrol>
