@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cruisecontrol>
+  <info>
+    <property name="logdir" value="/Users/arthur/Library/Application Support/Go Agent/pipelines/MyFirstPipeline/cruise-output" />
+    <property name="logfile" value="log.xml" />
+  </info>
+  <build time="0 minute(s) 0 second(s)" error="return code is 127">
+    <target name="exec">
+      <task name="./build" />
+    </target>
+  </build>
+</cruisecontrol>
+
