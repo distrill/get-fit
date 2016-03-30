@@ -15,8 +15,10 @@ fi
 
 # TODO currently only checks versions against local packages.
 # should pull latest from gcr.io and check that as well
-# version number from package.json
+
+# current build version number from package.json
 BUILD_VERSION=$(cat package.json | grep "version" | awk '{print $2}' | sed -e 's/"//g' -e 's/,//g')
+# previous image version from docker images
 PREV_VERSION=$(docker images | grep -w "^${SERVICE} " | awk '{print $2}' | sed -e 's/v-//g' | sort -r | head -1)
 IMAGE=$SERVICE:v-$BUILD_VERSION
 if [ "$BUILD_VERSION" = "$PREV_VERSION" ]; then
