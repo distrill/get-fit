@@ -14,5 +14,5 @@ COPY . /usr/src/app
 # Environment variables
 ENV MONGOLAB_URI mongodb://arthur:password@ds025239.mlab.com:25239/get-fit-dev
 
-EXPOSE 8080
+EXPOSE 3030
 CMD [ "npm", "start" ]

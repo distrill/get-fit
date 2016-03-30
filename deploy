@@ -1,0 +1,54 @@
+#! /bin/bash
+
+# run this script from the root directory of the service to be deployed.
+# need to provide 3 arguments: project id, service name, and version
+
+# TODO this is the worst thing ever stop pls stahp
+export PROJECT="strawhouse-internals"
+export CLUSTER="production"
+export ZONE="us-central1-a"
+
+# gcloud get shit setup
+# check arguments
+if [ $# -ne 1 ]; then
+  echo "You need to specify a service"
+  exit
+fi
+
+SERVICE=$1
+
+gcloud config set project $PROJECT
+gcloud config set container/cluster $CLUSTER
+gcloud config set compute/zone $ZONE
+gcloud container clusters get-credentials $CLUSTER
+
+# build and push new docker image to gcloud
+# TODO: check if docker is running. exit and error if not
+#KERNEL=$(uname -a | awk '{print $1})'
+#if [ "$KERNEL" = "Darwin" ]; then
+#  boot2docker start
+#fi
+
+# TODO currently only checks versions against local packages.
+# should pull latest from gcr.io and check that as well
+
+# this build version number from package.json
+BUILD_VERSION=$(cat package.json | grep "version" | awk '{print $2}' | sed -e 's/"//g' -e 's/,//g')
+# most recent push version from docker images
+PREV_VERSION=$(docker images | grep -w "gcr.io/${PROJECT}/${SERVICE} " | awk '{print $2}' | sed -e 's/v-//g' | sort -r | head -1)
+IMAGE="gcr.io/${PROJECT}/${SERVICE}:v-${BUILD_VERSION}"
+if [ "$BUILD_VERSION" = "$PREV_VERSION" ]; then
+  echo "${IMAGE} already exists."
+  echo "Did you remember to update version in package.json?"
+  exit 1
+fi
+
+# rename docker image from build step for deploy push
+docker tag $SERVICE:v-$BUILD_VERSION $IMAGE
+
+# kuberpush kuberdeploy cugar goober
+gcloud docker push $IMAGE
+
+# update kubernetes pods. this assumes rc and service already up
+# kubectl rolling-update $SERVICE-controller --image=gcr.io/$PROJECT/$SERVICE:$BUILD_VERSION --update-period=2s
+
