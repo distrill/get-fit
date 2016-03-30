@@ -2,7 +2,9 @@
 
 echo 'WHOAMI'
 whoami
-exit
+echo $PATH
+
+# exit
 
 # TODO get rid of this. it's the worst thing ever
 #export PATH=$PATH:/usr/local/bin
