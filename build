@@ -1,6 +1,6 @@
 #! /bin/bash
 
 echo $PATH
-eport PATH=$PATH:/usr/local/bin
+export PATH=$PATH:/usr/local/bin
 pwd
 npm install
