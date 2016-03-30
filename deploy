@@ -4,7 +4,7 @@
 # need to provide service name argument.
 
 # TODO environment variables instead?
-export PATH=$PATH:/usr/local/bin
+export PATH=$PATH:/usr/local/bin:/Users/arthur/google-cloud-sdk/bin
 export PROJECT="strawhouse-internals"
 export CLUSTER="production"
 export ZONE="us-central1-a"

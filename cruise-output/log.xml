@@ -4,9 +4,9 @@
     <property name="logdir" value="/Users/arthur/Library/Application Support/Go Agent/pipelines/Get-Fit/cruise-output" />
     <property name="logfile" value="log.xml" />
   </info>
-  <build time="0 minute(s) 57 second(s)" error="return code is 1">
+  <build time="0 minute(s) 0 second(s)" error="return code is 2">
     <target name="exec">
-      <task name="./test.sh" />
+      <task name="./deploy" />
     </target>
   </build>
 </cruisecontrol>
