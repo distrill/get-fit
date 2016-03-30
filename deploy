@@ -9,6 +9,9 @@ export PATH=$PATH:/usr/local/bin:/Users/arthur/google-cloud-sdk/bin
 export PROJECT="strawhouse-internals"
 export CLUSTER="production"
 export ZONE="us-central1-a"
+export DOCKER_HOST=tcp://192.168.59.103:2376
+export DOCKER_CERT_PATH=/Users/arthur/.boot2docker/certs/boot2docker-vm
+export DOCKER_TLS_VERIFY=1
 
 # gcloud get shit setup
 # check arguments
@@ -29,7 +32,6 @@ KERNEL=$(uname -a | awk '{print $1}')
 if [ "$KERNEL" = "Darwin" ]; then
   boot2docker start
 fi
-
 # TODO currently only checks versions against local packages.
 # should pull latest from gcr.io and check that as well
 
