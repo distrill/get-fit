@@ -1,9 +1,10 @@
 #! /bin/bash
 
 # run this script from the root directory of the service to be deployed.
-# need to provide 3 arguments: project id, service name, and version
+# need to provide service name argument.
 
-# TODO this is the worst thing ever stop pls stahp
+# TODO environment variables instead?
+export PATH=$PATH:/usr/local/bin
 export PROJECT="strawhouse-internals"
 export CLUSTER="production"
 export ZONE="us-central1-a"
@@ -23,11 +24,10 @@ gcloud config set compute/zone $ZONE
 gcloud container clusters get-credentials $CLUSTER
 
 # build and push new docker image to gcloud
-# TODO: check if docker is running. exit and error if not
-#KERNEL=$(uname -a | awk '{print $1})'
-#if [ "$KERNEL" = "Darwin" ]; then
-#  boot2docker start
-#fi
+KERNEL=$(uname -a | awk '{print $1})'
+if [ "$KERNEL" = "Darwin" ]; then
+  boot2docker start
+fi
 
 # TODO currently only checks versions against local packages.
 # should pull latest from gcr.io and check that as well

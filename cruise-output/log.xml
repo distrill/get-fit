@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <cruisecontrol>
   <info>
-    <property name="logdir" value="/Users/arthur/Library/Application Support/Go Agent/pipelines/MyFirstPipeline/cruise-output" />
+    <property name="logdir" value="/Users/arthur/Library/Application Support/Go Agent/pipelines/Get-Fit/cruise-output" />
     <property name="logfile" value="log.xml" />
   </info>
-  <build error="exec error">
+  <build time="0 minute(s) 57 second(s)" error="return code is 1">
     <target name="exec">
-      <task name="npm install">
-        <message priority="error"><![CDATA[Could not execute command: npm install]]></message>
-      </task>
+      <task name="./test.sh" />
     </target>
   </build>
 </cruisecontrol>
