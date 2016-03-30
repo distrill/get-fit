@@ -1,28 +1,28 @@
 #! /bin/bash
 
-# TODO get rid of this. the worst thing ever
-export PATH=$PATH:/usr/local/bin
+# TODO get rid of this. it's the worst thing ever
+# export PATH=$PATH:/usr/local/bin
 
-# app name
-SERVICE=$1
-
-if [ "$#" -ne 1 ]; then
-  echo "A service must be specified"
-  exit
+# app name, check if user specified otherwise use directory name
+if [ "$#" -eq 1 ]; then
+  SERVICE=$1
+else
+  SERVICE=${PWD##*/};
 fi
 
 # TODO currently only checks versions against local packages.
 # should pull latest from gcr.io and check that as well
 # version number from package.json
 BUILD_VERSION=$(cat package.json | grep "version" | awk '{print $2}' | sed -e 's/"//g' -e 's/,//g')
-PREV_VERSION=$(docker images | grep ${SERVICE} | awk '{print $2}' | sed -e 's/v-//g' | sort -r | head -1)
-if [ $BUILD_VERSION = $PREV_VERSION ]; then
-  echo "Image with version ${PREV_VERSION} tag already exists."
+PREV_VERSION=$(docker images | grep -w "^${SERVICE} " | awk '{print $2}' | sed -e 's/v-//g' | sort -r | head -1)
+IMAGE=$SERVICE:v-$BUILD_VERSION
+if [ "$BUILD_VERSION" = "$PREV_VERSION" ]; then
+  echo "${IMAGE} already exists."
   echo "Did you remember to update version in package.json?"
   exit
 fi
 
 
 # docker build
-docker build -t $SERVICE:v-$BUILD_VERSION .
+docker build -t $IMAGE .
 
