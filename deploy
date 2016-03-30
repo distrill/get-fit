@@ -4,6 +4,8 @@
 # need to provide 3 arguments: project id, service name, and version
 
 # TODO this is the worst thing ever stop pls stahp
+export PATH=$PATH:/usr/bin/local:/Users/arthur/google-cloud-sdk/bin/gcloud
+
 export PROJECT="strawhouse-internals"
 export CLUSTER="production"
 export ZONE="us-central1-a"
