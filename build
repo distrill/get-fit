@@ -1,5 +1,9 @@
 #! /bin/bash
 
+echo 'WHOAMI'
+whoami
+exit
+
 # TODO get rid of this. it's the worst thing ever
 #export PATH=$PATH:/usr/local/bin
 #export DOCKER_HOST=tcp://192.168.59.103:2376
