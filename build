@@ -26,7 +26,7 @@ fi
 # TODO does it need to start on linux?
 KERNEL=$(uname -a | awk '{print $1}')
 if [ "$KERNEL" = "Darwin" ]; then
-  boot2docker
+  boot2docker start
 fi
 
 # docker build
