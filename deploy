@@ -24,7 +24,7 @@ gcloud config set compute/zone $ZONE
 gcloud container clusters get-credentials $CLUSTER
 
 # build and push new docker image to gcloud
-KERNEL=$(uname -a | awk '{print $1})'
+KERNEL=$(uname -a | awk '{print $1}')
 if [ "$KERNEL" = "Darwin" ]; then
   boot2docker start
 fi
@@ -50,5 +50,4 @@ docker tag $SERVICE:v-$BUILD_VERSION $IMAGE
 gcloud docker push $IMAGE
 
 # update kubernetes pods. this assumes rc and service already up
-# kubectl rolling-update $SERVICE-controller --image=gcr.io/$PROJECT/$SERVICE:$BUILD_VERSION --update-period=2s
 
