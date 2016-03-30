@@ -1,6 +1,6 @@
 {
   "name": "get-fit",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "fitness application utilizing wolfram-fit package",
   "main": "server.js",
   "scripts": {

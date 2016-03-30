@@ -6,9 +6,6 @@ export DOCKER_HOST=tcp://192.168.59.103:2376
 export DOCKER_CERT_PATH=/Users/arthur/.boot2docker/certs/boot2docker-vm
 export DOCKER_TLS_VERIFY=1
 
-echo "WHO THE HELL AM I"
-whoami
-
 # app name, check if user specified otherwise use directory name
 if [ "$#" -eq 1 ]; then
   SERVICE=$1
