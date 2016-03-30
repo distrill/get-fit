@@ -1,6 +1,6 @@
 #! /bin/bash
 
-# app name, check if user specified otherwise use directory name
+# app name, check if user specified otherwise use directory name 
 if [ "$#" -eq 1 ]; then
   SERVICE=$1
 else
