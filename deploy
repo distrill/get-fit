@@ -1,17 +1,17 @@
 #! /bin/bash
 
+#--------------------------------------------------------------------------- 
 # run this script from the root directory of the service to be deployed.
-# need to provide service name argument.
-
-export PATH=$PATH:/usr/local/bin:/Users/arthur/google-cloud-sdk/bin
+# need to provide the service name as an argument.
+#--------------------------------------------------------------------------- 
 
 # TODO environment variables instead?
 export PROJECT="strawhouse-internals"
 export CLUSTER="production"
 export ZONE="us-central1-a"
-export DOCKER_HOST=tcp://192.168.59.103:2376
-export DOCKER_CERT_PATH=/Users/arthur/.boot2docker/certs/boot2docker-vm
-export DOCKER_TLS_VERIFY=1
+# export DOCKER_HOST=tcp://192.168.59.103:2376
+# export DOCKER_CERT_PATH=/Users/arthur/.boot2docker/certs/boot2docker-vm
+# export DOCKER_TLS_VERIFY=1
 
 # gcloud get shit setup
 # check arguments
@@ -32,9 +32,9 @@ KERNEL=$(uname -a | awk '{print $1}')
 if [ "$KERNEL" = "Darwin" ]; then
   boot2docker start
 fi
-# TODO currently only checks versions against local packages.
-# should pull latest from gcr.io and check that as well
 
+# TODO does this docker work properly?
+docker pull --all-tags gcr.io/${PROJECT}/${SERVICE}
 # this build version number from package.json
 BUILD_VERSION=$(cat package.json | grep "version" | awk '{print $2}' | sed -e 's/"//g' -e 's/,//g')
 # most recent push version from docker images
