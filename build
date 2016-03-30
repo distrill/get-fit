@@ -22,6 +22,12 @@ if [ "$BUILD_VERSION" = "$PREV_VERSION" ]; then
   exit
 fi
 
+# check if linux or osx. if osx then try to start boot2docker.
+# TODO does it need to start on linux?
+KERNEL=$(uname -a | awk '{print $1}')
+if [ "$KERNEL" = "Darwin" ]; then
+  boot2docker
+fi
 
 # docker build
 docker build -t $IMAGE .
