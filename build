@@ -22,7 +22,6 @@ IMAGE=$SERVICE:v-$BUILD_VERSION
 if [ "$BUILD_VERSION" = "$PREV_VERSION" ]; then
   echo "${IMAGE} already exists."
   echo "Did you remember to update version in package.json?"
-  exit 1
 fi
 
 # check if linux or osx. if osx then try to start boot2docker.
