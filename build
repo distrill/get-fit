@@ -1,33 +1,36 @@
-#! /bin/bash
+echo 'why no move.'
 
-# app name, check if user specified otherwise use directory name 
-if [ "$#" -eq 1 ]; then
-  SERVICE=$1
-else
-  SERVICE=${PWD##*/};
-fi
-
-# TODO currently only checks versions against local packages.
-# should pull latest from gcr.io and check that as well
-
-# current build version number from package.json
-BUILD_VERSION=$(cat package.json | grep "version" | awk '{print $2}' | sed -e 's/"//g' -e 's/,//g')
-# previous image version from docker images
-PREV_VERSION=$(docker images | grep -w "^${SERVICE} " | awk '{print $2}' | sed -e 's/v-//g' | sort -r | head -1)
-IMAGE=$SERVICE:v-$BUILD_VERSION
-if [ "$BUILD_VERSION" = "$PREV_VERSION" ]; then
-  echo "${IMAGE} already exists."
-  echo "Did you remember to update version in package.json?"
-  exit
-fi
-
-# check if linux or osx. if osx then try to start boot2docker.
-# TODO does it evern need to start on linux?
-KERNEL=$(uname -a | awk '{print $1}')
-if [ "$KERNEL" = "Darwin" ]; then
-  boot2docker start
-fi
-
-# docker build
-docker build -t $IMAGE .
-
+# #! /bin/bash
+# 
+# # app name, check if user specified otherwise use directory name 
+# if [ "$#" -eq 1 ]; then
+#   SERVICE=$1
+# else
+#   SERVICE=${PWD##*/};
+# fi
+# 
+# # TODO currently only checks versions against local packages.
+# # is this appropriate for build step? check global in deploy
+# 
+# # current build version number from package.json
+# BUILD_VERSION=$(cat package.json | grep "version" | awk '{print $2}' | sed -e 's/"//g' -e 's/,//g')
+# # previous image version from docker images
+# PREV_VERSION=$(docker images | grep -w "^${SERVICE} " | awk '{print $2}' | sed -e 's/v-//g' | sort -r | head -1)
+# IMAGE=$SERVICE:v-$BUILD_VERSION
+# 
+# if [ "$BUILD_VERSION" = "$PREV_VERSION" ]; then
+#   echo "${IMAGE} already exists."
+#   echo "Did you remember to update version in package.json?"
+#   exit
+# fi
+# 
+# # check if linux or osx. if osx then try to start boot2docker.
+# # TODO does it evern need to start on linux?
+# KERNEL=$(uname -a | awk '{print $1}')
+# if [ "$KERNEL" = "Darwin" ]; then
+#   boot2docker start
+# fi
+# 
+# # docker build
+# docker build -t $IMAGE .
+# 
