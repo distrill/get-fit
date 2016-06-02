@@ -1,3 +1,3 @@
 module.exports = {
-  url: process.env.MONGOLAB_URI || 'mongodb://localhost',
+  url: 'mongodb://user:password@ds021663.mlab.com:21663/get-fit-dev',
 };

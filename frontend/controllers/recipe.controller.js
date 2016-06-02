@@ -134,13 +134,8 @@ angular.module('recipe').controller('recipeController', [
           if (response.data.error) {
             $window.location.href = '/';
           } else {
-<<<<<<< HEAD
-            $window.location.href = '/#/';
-=======
-            // $window.location.href = '/#/home';
             $scope.recipes.push(response.data);
             $scope.loadDetail($scope.recipes.length - 1);
->>>>>>> 3edc756bc6deb8d3be0d067a5f933b00495cfd35
           }
         }, (response) => {
           // failure :(
